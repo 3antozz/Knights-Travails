@@ -32,21 +32,20 @@ function knightMoves([startRow, startColumn], [endRow, endColumn]) {
   }
   const startNode = new Node([startRow, startColumn]);
   const path = [[startRow, startColumn]];
-  let Queue = [[startNode, 0, path]];
+  let Queue = [[startNode, path]];
   while (Queue.length >= 1) {
-    const [node, movesCount, path] = Queue.shift();
+    const [node, path] = Queue.shift();
     for (let [row, column] of node.moves) {
       if (row === endRow && column === endColumn) {
+        const finalPath = [...path, [row, column]];
         console.log(`You made it in ${path.length} moves!  Here's your path:`);
-        path.forEach((element) => {
+        finalPath.forEach((element) => {
           console.log(element);
         });
-        console.log([row, column]);
         return path;
       }
       Queue.push([
         new Node([row, column]),
-        movesCount + 1,
         [...path, [row, column]],
       ]);
     }
